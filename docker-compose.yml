@@ -2,7 +2,9 @@
 
 services:
   api:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile.api
     image: resy-takehome-backend
     ports: 
       - 49160:8080
@@ -11,6 +13,9 @@ services:
     depends_on: 
       - db
   db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
     image: postgres
     # restart: always
     ports: 
