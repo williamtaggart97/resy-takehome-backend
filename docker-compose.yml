@@ -1,0 +1,22 @@
+# Docker Compose to set up api and db in sync
+
+services:
+  api:
+    build: .
+    image: resy-takehome-backend
+    ports: 
+      - 49160:8080
+    links: 
+      - db:postgres
+    depends_on: 
+      - db
+  db:
+    image: postgres
+    # restart: always
+    ports: 
+      - 5432:5432
+    command: ["postgres", "-c", "log_statement=all"]
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: pursuit
+      POSTGRES_PASSWORD: pursuit2022
