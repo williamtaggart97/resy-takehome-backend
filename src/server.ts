@@ -6,8 +6,8 @@ import { appRouter } from './routes';
 import { pgKnex } from './configs/db.config';
 
 // Constants
-const PORT = 8080;
-const HOST = '0.0.0.0';
+const LOCAL_PORT = 8080;
+const LOCAL_HOST = '0.0.0.0';
 
 // App
 const app = express();
@@ -19,16 +19,32 @@ app.use(
 )
 app.use('/api', appRouter);
 
-app.listen(PORT, HOST, () => {
-    console.log(`Raffle api listening on port ${PORT}`)
-
-    pgKnex.raw("SELECT 1").then(() => {
-        console.log("PostgreSQL connected");
-    })
-    .catch((e) => {
-        console.log("PostgreSQL not connected");
-        console.error(e);
+if (process.env.PORT) {
+    app.listen(process.env.PORT, () => {
+        console.log(`Raffle api listening on port ${process.env.PORT}`)
+    
+        pgKnex.raw("SELECT 1").then(() => {
+            console.log("PostgreSQL connected");
+        })
+        .catch((e) => {
+            console.log("PostgreSQL not connected");
+            console.error(e);
+        });
     });
-});
+} else {
+    app.listen(LOCAL_PORT, LOCAL_HOST, () => {
+        console.log(`Raffle api listening on port ${LOCAL_PORT}`)
+    
+        pgKnex.raw("SELECT 1").then(() => {
+            console.log("PostgreSQL connected");
+        })
+        .catch((e) => {
+            console.log("PostgreSQL not connected");
+            console.error(e);
+        });
+    });
+}
+
+
 
 export { app };
