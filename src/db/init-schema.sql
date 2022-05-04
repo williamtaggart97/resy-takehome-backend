@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS "Restaurants" (
     "name" text NOT NULL,
     "description" text NOT NULL,
     "phoneNumber" varchar(255),
-    "openingTime" timestamptz,
-    "closingTime" timestamptz,
+    "openingTime" TIME,
+    "closingTime" TIME,
     "location" text NOT NULL,
     "tables" jsonb
 );
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "Reservations" (
     "lastName" text NOT NULL,
     "phoneNumber" varchar(255) NOT NULL,
     "email" varchar(255),
-    "time" timestamptz NOT NULL,
+    "time" timestamp NOT NULL,
     "numGuests" int NOT NULL,
     "restaurantId" uuid NOT NULL REFERENCES "Restaurants" (id) ON DELETE CASCADE 
 ); 

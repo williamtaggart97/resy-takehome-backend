@@ -1,25 +1,32 @@
-import { RequestHandler, Router } from "express"
+import e, { RequestHandler, Router } from "express"
 import Joi from "joi"
 import { ContainerTypes, createValidator, ValidatedRequest, ValidatedRequestSchema } from "express-joi-validation"
+import { makeReservation } from "../../models/reservation.model";
+import { Reservation } from "../../util/types";
 const validator = createValidator();
 
 interface MakeReservationSchema extends ValidatedRequestSchema {
-    [ContainerTypes.Body]: {
-    }
+    [ContainerTypes.Body]: Omit<Reservation, 'id'>
 }
 
-// TODO: define a query object (pagination?, filters?)
 const expectedBody = Joi.object({
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
+    email: Joi.string().email({ tlds: { allow: false } }),
+    time: Joi.date().timestamp().required(),
+    numGuests: Joi.number().required(),
+    restaurantId: Joi.string().guid({ version: 'uuidv4' }).required(),
 })
 
-const main: RequestHandler = (req: ValidatedRequest<MakeReservationSchema>, res, next) => {
-    const { } = req.query;
+const main: RequestHandler = async (req: ValidatedRequest<MakeReservationSchema>, res, next) => {
+    const newReservation = await makeReservation(req.body);
 
-    // use id to find reservation
-
-    res.send({
-        
-    });
+    if (newReservation) {
+        res.status(200).send(newReservation);
+    } else {
+        res.sendStatus(500);
+    }
 }
 
 export const makeReservationController = Router().use(validator.body(expectedBody), main);

@@ -1,26 +1,34 @@
 import { RequestHandler, Router } from "express"
 import Joi from "joi"
 import { ContainerTypes, createValidator, ValidatedRequest, ValidatedRequestSchema } from "express-joi-validation"
+import { deleteReservation } from "../../models/reservation.model";
 const validator = createValidator();
 
 interface DeleteReservationSchema extends ValidatedRequestSchema {
     [ContainerTypes.Params]: {
-        id: string
+        reservationId: string
     }
 }
 
 const expectedParams = Joi.object({
-    id: Joi.string().guid({ version: 'uuidv4' }).required(),
+    reservationId: Joi.string().guid({ version: 'uuidv4' }).required(),
 })
 
-const main: RequestHandler = (req: ValidatedRequest<DeleteReservationSchema>, res, next) => {
-    const { id } = req.params;
+const main: RequestHandler = async (req: ValidatedRequest<DeleteReservationSchema>, res, next) => {
+    const { reservationId } = req.params;
 
     // use id to delete 
-    res.send({
-        success: 1,
-        removedId: id
-    });
+    const deletedId = await deleteReservation(reservationId);
+
+    if (deletedId) {
+        res.status(200).send({
+            success: 1,
+            removedId: deletedId
+        });
+    } else {
+        res.sendStatus(404);
+    }
+    
 }
 
-export const deleteReservationController = Router().use(validator.params(expectedParams), main);
+export const deleteReservationController = Router({ mergeParams: true }).use(validator.params(expectedParams), main);

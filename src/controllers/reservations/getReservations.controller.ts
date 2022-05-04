@@ -1,6 +1,7 @@
 import { RequestHandler, Router } from "express"
 import Joi from "joi"
 import { ContainerTypes, createValidator, ValidatedRequest, ValidatedRequestSchema } from "express-joi-validation"
+import { getReservations } from "../../models/reservation.model";
 const validator = createValidator();
 
 interface FindReservationsSchema extends ValidatedRequestSchema {
@@ -12,14 +13,15 @@ interface FindReservationsSchema extends ValidatedRequestSchema {
 const expectedQuery = Joi.object({
 })
 
-const main: RequestHandler = (req: ValidatedRequest<FindReservationsSchema>, res, next) => {
-    const { } = req.query;
+const main: RequestHandler = async (req: ValidatedRequest<FindReservationsSchema>, res, next) => {
 
-    // use id to find reservation
+    const reservations = await getReservations(req.query);
 
-    res.send({
-        
-    });
+    if (reservations) {
+        res.status(200).send({ reservations })
+    } else {
+        res.sendStatus(500);
+    }
 }
 
 export const getReservationsController = Router().use(validator.query(expectedQuery), main);
