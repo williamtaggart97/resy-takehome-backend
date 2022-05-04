@@ -17,6 +17,19 @@ Backend for a Restaurant/Reservation Service that will allow fellows to spin up 
 - Cancel a reservation
 - Find available reservations (search by time or location) (bonus?)
 
+#### TIP: run the 'heroku apps' command to see if your app is already running
+
+### Step-By-Step - heroku deployment
+1. In the terminal, confirm you are within the resy-takehome-backend directory
+2. Run `heroku login` and login with your heroku credentials
+3. Run `heroku container:login` 
+2. Run `bash ./scripts/start-heroku.sh -n {put your name here}-takehome-api`, ex: `bash ./scripts/start-heroku.sh -n billy-takehome-api`
+3. Wait for the command to complete
+4. Once complete, run heroku open
+
+### Stopping the app - heroku 
+1. In the terminal, confirm you are within the resy-takehome-backend directory
+2. Copy `bash ./scripts/stop-heroku.sh -n {name}-takehome-api` and paste in the terminal, then hit return / enter
 
 ### Step-By-Step - local deployment
 1. In the terminal, confirm you are within the resy-takehome-backend directory
