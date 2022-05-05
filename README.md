@@ -1,5 +1,8 @@
+
 ## Restaurant Reservation Service
-Backend for a Restaurant/Reservation Service that will allow fellows to spin up and host a pre-made backend. The backend will include all the necessary backend functionality to meet the technical requirements described below.
+This repo contains the backend for a Restaurant/Reservation Service that will allow fellows to spin up and host a pre-made backend. The backend will include all the necessary backend functionality to meet the technical requirements described below. 
+
+For front-end development, please follow directions below to host your own copy of this back-end and create a separate repo where you will develop your front-end. See the screenshots folder for design inspiration from OpenTable and Resy. While you are not expected to mimic the exact functionality of these services, you may also reference  https://www.opentable.com/ and https://www.resy.com/ for inspiration.
 
 ## Technical Specification
 
