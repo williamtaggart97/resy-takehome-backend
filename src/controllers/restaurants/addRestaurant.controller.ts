@@ -25,12 +25,14 @@ const expectedBody = Joi.object({
 });
 
 const main: RequestHandler = async (req: ValidatedRequest<AddRestaurantSchema>, res, next) => {
-    const newRestaurant = await addRestaurant(req.body);
+    try {
+        const newRestaurant = await addRestaurant(req.body);
 
-    if (newRestaurant) {
-        res.status(200).send(newRestaurant);
-    } else {
-        res.sendStatus(500);
+        if (newRestaurant) {
+            res.status(200).send(newRestaurant);
+        }
+    } catch (err) {
+        next(err)
     }
 }
 

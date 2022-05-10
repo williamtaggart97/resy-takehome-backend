@@ -20,13 +20,16 @@ const expectedBody = Joi.object({
 })
 
 const main: RequestHandler = async (req: ValidatedRequest<MakeReservationSchema>, res, next) => {
-    const newReservation = await makeReservation(req.body);
+    try {
+        const newReservation = await makeReservation(req.body);
 
-    if (newReservation) {
-        res.status(200).send(newReservation);
-    } else {
-        res.sendStatus(500);
+        if (newReservation) {
+            res.status(200).send(newReservation);
+        }
+    } catch (err) {
+        next(err)
     }
+
 }
 
 export const makeReservationController = Router().use(validator.body(expectedBody), main);

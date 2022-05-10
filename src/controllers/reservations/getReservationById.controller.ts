@@ -15,15 +15,19 @@ const expectedParams = Joi.object({
 });
 
 const main: RequestHandler = async (req: ValidatedRequest<FindReservationByIdSchema>, res, next) => {
-    const { reservationId } = req.params;
+    try {
+        const { reservationId } = req.params;
 
-    // use id to find reservation
-    const reservation = await getReservationById(reservationId);
+        // use id to find reservation
+        const reservation = await getReservationById(reservationId);
 
-    if (reservation) {
-        res.status(200).send(reservation);
-    } else {
-        res.sendStatus(404);
+        if (reservation) {
+            res.status(200).send(reservation);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        next(err)
     }
 }
 

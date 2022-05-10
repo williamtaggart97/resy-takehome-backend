@@ -14,13 +14,12 @@ const expectedQuery = Joi.object({
 })
 
 const main: RequestHandler = async (req: ValidatedRequest<FindReservationsSchema>, res, next) => {
+    try {
+        const reservations = await getReservations(req.query);
 
-    const reservations = await getReservations(req.query);
-
-    if (reservations) {
         res.status(200).send({ reservations })
-    } else {
-        res.sendStatus(500);
+    } catch (err) {
+        next(err)
     }
 }
 
