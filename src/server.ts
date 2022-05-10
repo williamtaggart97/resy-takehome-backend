@@ -34,6 +34,15 @@ if (process.env.PORT) {
                 console.log("PostgreSQL not connected");
                 console.error(e);
             });
+
+        // cache setup -- only for local development
+        await redisClient.connect().then(() => {
+            console.log('Redis Client Connected')
+        })
+            .catch((e) => {
+                console.log('Redis Client not connected');
+                console.error(e);
+            });
     });
 } else {
     app.listen(LOCAL_PORT, LOCAL_HOST, async () => {
@@ -48,15 +57,13 @@ if (process.env.PORT) {
             });
 
         // cache setup -- only for local development
-        await redisClient.connect();
-        redisClient.set('key', 'value').then(() => {
+        await redisClient.connect().then(() => {
             console.log('Redis Client Connected')
         })
             .catch((e) => {
                 console.log('Redis Client not connected');
                 console.error(e);
             });
-
     });
 }
 
