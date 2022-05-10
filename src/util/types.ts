@@ -3,10 +3,14 @@ export interface Restaurant {
     name: string;
     description: string;
     phoneNumber?: string;
-    openingTime?: string; // dateString
-    closingTime?: string; // dateString
+    openingTime?: string; // time of day
+    closingTime?: string; // time of day
+    price: '$' | '$$' | '$$$' | '$$$$';
+    cuisine: string;
     location: string;
+    diningRestriction?: 'Takeout Only' | 'Delivery Only';
     tables?: TableConfig;
+    reservations?: Reservation[];
 }
 
 export interface TableConfig {
@@ -17,11 +21,12 @@ export interface TableConfig {
 
 export interface Reservation {
     id: string;
+    createdAt: string; // timestamp
     firstName: string;
     lastName: string;
     phoneNumber: string; // phone number of the primary guest
     email?: string; // email of the primary guest
-    time: string; // dateString
+    time: string; // time of day
     numGuests: number;
     restaurantId: string;
 }

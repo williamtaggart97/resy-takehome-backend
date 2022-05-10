@@ -6,14 +6,17 @@ For front-end development, please follow directions below to host your own copy 
 
 ## Technical Specification
 
-### Restaurants
+#### API BASE: '/api'
 
-- View all restaurants
-- Add a restaurant
-- View individual restaurant (hours, open reservations, location)
-- Search/filter restaurants (bonus?)
+### Restaurants: /restaurants
 
-### Reservations
+- Get all restaurants: GET /restaurants
+- Add a restaurant: POST /restaurants
+- Update a restaurant: PATCH /restaurants
+- Get individual restaurant: GET /restaurants/:restaurantId
+- Search/filter restaurants: GET /restaurants
+
+### Reservations: /reservations
 	
 - View all reservations 
 - Make a reservation

@@ -6,11 +6,17 @@ const validator = createValidator();
 
 interface FindRestaurantsSchema extends ValidatedRequestSchema {
     [ContainerTypes.Query]: {
+        filters: any
     }
 }
 
 // TODO: define a query object (pagination?, filters?)
 const expectedQuery = Joi.object({
+    filters: Joi.object({
+        
+    }),
+    searchTerm: Joi.string(),
+
 })
 
 const main: RequestHandler = async (req: ValidatedRequest<FindRestaurantsSchema>, res, next) => {

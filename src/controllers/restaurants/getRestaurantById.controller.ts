@@ -1,7 +1,7 @@
 import { RequestHandler, Router } from "express"
 import Joi from "joi"
 import { ContainerTypes, createValidator, ValidatedRequest, ValidatedRequestSchema } from "express-joi-validation"
-import { getReservationById } from "../../models/reservation.model";
+import { getRestaurantById } from "../../models/restaurant.model";
 const validator = createValidator();
 
 interface FindRestaurantByIdSchema extends ValidatedRequestSchema {
@@ -18,7 +18,7 @@ const main: RequestHandler = async (req: ValidatedRequest<FindRestaurantByIdSche
     const { restaurantId } = req.params;
 
     // use id to find restaurant
-    const restaurant = await getReservationById(restaurantId);
+    const restaurant = await getRestaurantById(restaurantId);
 
     if (restaurant) {
         res.status(200).send(restaurant);

@@ -16,7 +16,11 @@ export const addRestaurant = async (input: Omit<Restaurant, 'id'>): Promise<Rest
 
 export const getRestaurantById = async (id: string): Promise<Restaurant> => {
     try {
-        return await pgKnex<Restaurant>('Restaurants').first('*').where({ id });
+        return await pgKnex<Restaurant>('Restaurants')
+            .leftJoin('Reservations', 'Reservations.restaurantId', 'Restaurants.id')
+            .select('Restaurants.*', pgKnex.raw('JSON_AGG("Reservations".*) as reservations'))
+            .where({ 'Restaurants.id': id })
+            .groupBy('Restaurants.id', 'Reservations.restaurantId');
     } catch (err) {
         console.error(err);
         throw new Error('Get Restaurant By ID -- DB Query')
@@ -25,7 +29,10 @@ export const getRestaurantById = async (id: string): Promise<Restaurant> => {
 
 export const getRestaurants = async (input: any): Promise<Restaurant[]> => {
     try {
-        return await pgKnex<Restaurant>('Restaurants').select('*');
+        return await pgKnex<Restaurant>('Restaurants')
+            .leftJoin('Reservations', 'Reservations.restaurantId', 'Restaurants.id')
+            .select('Restaurants.*', pgKnex.raw('JSON_AGG("Reservations".*) as reservations'))
+            .groupBy('Restaurants.id', 'Reservations.restaurantId');
     } catch (err) {
         console.error(err);
         throw new Error('Get Restaurants -- DB Query')
