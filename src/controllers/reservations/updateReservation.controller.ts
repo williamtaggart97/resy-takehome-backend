@@ -7,8 +7,8 @@ const validator = createValidator();
 
 interface UpdateReservationSchema extends ValidatedRequestSchema {
     [ContainerTypes.Body]: Omit<Reservation, 'id'>,
-    [ContainerTypes.Params]: { 
-        reservationId: string 
+    [ContainerTypes.Params]: {
+        reservationId: string
     }
 }
 
@@ -27,16 +27,20 @@ const expectedParams = Joi.object({
 })
 
 const main: RequestHandler = async (req: ValidatedRequest<UpdateReservationSchema>, res, next) => {
-    const { reservationId } = req.params;
-    
+    try {
+        const { reservationId } = req.params;
 
-    // use id to find reservation
-    const reservation = await updateReservationById(reservationId, req.body);
 
-    if (reservation) {
-        res.status(200).send(reservation);
-    } else {
-        res.sendStatus(404);
+        // use id to find reservation
+        const reservation = await updateReservationById(reservationId, req.body);
+
+        if (reservation) {
+            res.status(200).send(reservation);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        next(err)
     }
 }
 

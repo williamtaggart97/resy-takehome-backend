@@ -28,10 +28,15 @@ export const getReservationById = async (id: string): Promise<Reservation> => {
         // write function here
 
         // STEP 2: If Restaurant is not in the cache, check the db for the record
-        const reservation =  await pgKnex<Reservation>('Reservations').first('*').where({ id });
+        const reservation = await pgKnex<Reservation>('Reservations').first('*').where({ id });
 
-        // STEP 3: If Restaurant is not in the cache, add record to the cache
-        return reservation;
+        if (reservation) {
+            // STEP 3: If Restaurant is not in the cache, add record to the cache
+            return reservation;
+        } else {
+            return null;
+        }
+
     } catch (err) {
         console.error(err);
         throw new Error('Get Reservation By Id failed -- DB Query')
@@ -61,7 +66,7 @@ export const deleteReservation = async (id: string): Promise<string> => {
         if (rowsDeleted) {
             return id;
         } else {
-            throw new Error(`Reservation id: ${id} was not found.`)
+            return null;
         }
     } catch (err) {
         console.error(err);
@@ -77,14 +82,14 @@ export const updateReservationById = async (id: string, update: Partial<Reservat
 
         const updatedReservation = await pgKnex<Reservation>('Reservations')
             .where({ id })
-            .update({ 
+            .update({
                 ...update
             });
 
         if (updatedReservation) {
             return updatedReservation;
         } else {
-            throw new Error(`Reservation id: ${id} was not found.`)
+            return null;
         }
     } catch (err) {
         console.error(err);

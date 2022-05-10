@@ -24,17 +24,30 @@ export const getRestaurantById = async (id: string): Promise<Restaurant> => {
         // Cache Aside Implementation
         // STEP 1: Check if Restaurant exists in the cache
         // write function here
+        const cachedRestaurant = await redisClient.get(`restaurant:${id}`);
+        if (cachedRestaurant) {
+            console.log('fetched from cache')
+            return JSON.parse(cachedRestaurant);
+        } else {
+            console.log('fetched from postgres')
+            // STEP 2: If Restaurant is not in the cache, check the db for the record
+            const restaurant: Restaurant = await pgKnex<Restaurant>('Restaurants')
+                .leftJoin('Reservations', 'Reservations.restaurantId', 'Restaurants.id')
+                .first('Restaurants.*', pgKnex.raw('JSON_AGG("Reservations".*) as reservations'))
+                .where({ 'Restaurants.id': id })
+                .groupBy('Restaurants.id', 'Reservations.restaurantId');
 
-        // STEP 2: If Restaurant is not in the cache, check the db for the record
-        const restaurant: Restaurant = await pgKnex<Restaurant>('Restaurants')
-            .leftJoin('Reservations', 'Reservations.restaurantId', 'Restaurants.id')
-            .first('Restaurants.*', pgKnex.raw('JSON_AGG("Reservations".*) as reservations'))
-            .where({ 'Restaurants.id': id })
-            .groupBy('Restaurants.id', 'Reservations.restaurantId');
-        // STEP 3: If Restaurant is not in the cache, add record to the cache
+            if (restaurant) {
+                // STEP 3: If Restaurant is not in the cache, add record to the cache
+                redisClient.set(`restaurant:${restaurant.id}`, JSON.stringify(restaurant), {
+                    EX: 10
+                });
 
-        return restaurant;
-
+                return restaurant;
+            } else {
+                return null;
+            }
+        }
     } catch (err) {
         console.error(err);
         throw new Error('Get Restaurant By ID -- DB Query')

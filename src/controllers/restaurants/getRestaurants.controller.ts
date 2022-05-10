@@ -13,21 +13,22 @@ interface FindRestaurantsSchema extends ValidatedRequestSchema {
 // TODO: define a query object (pagination?, filters?)
 const expectedQuery = Joi.object({
     filters: Joi.object({
-        
+
     }),
     searchTerm: Joi.string(),
 
 })
 
 const main: RequestHandler = async (req: ValidatedRequest<FindRestaurantsSchema>, res, next) => {
+    try {
+        // use id to find reservation
+        const restaurants = await getRestaurants(req.query);
 
-    // use id to find reservation
-    const restaurants = await getRestaurants(req.query);
-
-    if (restaurants) {
-        res.status(200).send({ restaurants })
-    } else {
-        res.sendStatus(500);
+        if (restaurants) {
+            res.status(200).send({ restaurants })
+        }
+    } catch (err) {
+        next(err)
     }
 }
 

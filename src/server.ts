@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import { appRouter } from './routes';
 import { pgKnex } from './configs/db.config';
 import { redisClient } from './configs/cache.config';
+import { errorHandler } from './util/errors';
 
 // Constants
 const LOCAL_PORT = 8080;
@@ -19,6 +20,8 @@ app.use(
     })
 )
 app.use('/api', appRouter);
+app.use(errorHandler);
+
 // cache setup 
 if (process.env.PORT) {
     app.listen(process.env.PORT, async () => {

@@ -15,20 +15,23 @@ const expectedParams = Joi.object({
 })
 
 const main: RequestHandler = async (req: ValidatedRequest<DeleteReservationSchema>, res, next) => {
-    const { reservationId } = req.params;
+    try {
+        const { reservationId } = req.params;
 
-    // use id to delete 
-    const deletedId = await deleteReservation(reservationId);
-
-    if (deletedId) {
-        res.status(200).send({
-            success: 1,
-            removedId: deletedId
-        });
-    } else {
-        res.sendStatus(404);
-    }
+        // use id to delete 
+        const deletedId = await deleteReservation(reservationId);
     
+        if (deletedId) {
+            res.status(200).send({
+                success: 1,
+                removedId: deletedId
+            });
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        next(err)
+    }
 }
 
 export const deleteReservationController = Router({ mergeParams: true }).use(validator.params(expectedParams), main);

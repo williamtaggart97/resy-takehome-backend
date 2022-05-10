@@ -15,15 +15,19 @@ const expectedParams = Joi.object({
 });
 
 const main: RequestHandler = async (req: ValidatedRequest<FindRestaurantByIdSchema>, res, next) => {
-    const { restaurantId } = req.params;
+    try {
+        const { restaurantId } = req.params;
 
-    // use id to find restaurant
-    const restaurant = await getRestaurantById(restaurantId);
+        // use id to find restaurant
+        const restaurant = await getRestaurantById(restaurantId);
 
-    if (restaurant) {
-        res.status(200).send(restaurant);
-    } else {
-        res.sendStatus(404);
+        if (restaurant) {
+            res.status(200).send(restaurant);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        next(err)
     }
 }
 
