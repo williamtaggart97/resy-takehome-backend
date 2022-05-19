@@ -48,7 +48,7 @@ Create a client for a Raffle application. Users are able to:
 Use the details and endpoints of the API below to accomplish the Reservation App functionality. This API accepts and returns JSON payloads.
 
 <table>
-  <tr><td><strong>Method</strong></td><td><strong>Endpoint</strong></td><td style="min-width:200px"><strong>Description</strong></td><td><strong>Example JSON Body Payload</strong></td></tr>
+  <tr><td><strong>Method</strong></td><td><strong>Endpoint</strong></td><td><strong>Description &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></td><td><strong>Example JSON Body Payload</strong></td></tr>
   <tr><td>GET</td><td>`/api/restaurants`</td><td>List restaurants (empty query string = all restaurants)</td><td></td></tr>
   <tr><td>GET</td><td>`/api/restaurants/:id`</td><td>Retreive a restaurant by ID</td><td></td></tr>
   <tr><td>GET</td><td>`/api/restaurants/:id/reservations`</td><td>Retrieve all reservations at a restaurant</td><td></td></tr>
