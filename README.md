@@ -47,19 +47,66 @@ Create a client for a Raffle application. Users are able to:
 
 Use the details and endpoints of the API below to accomplish the Reservation App functionality. This API accepts and returns JSON payloads.
 
-| Method | Endpoint                        | Description                                                | Example JSON Body Payload |
-| ------ | ------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `GET`  | `/api/restaurants`                  | List restaurants (empty query string = all restaurants) | n/a |
-| `GET`  | `/api/restaurants/:id`              | Retrieve a restaurant by id | n/a | 
-| `GET`  | `/api/restaurants/:id/reservations` | Retrieve all reservations at a restaurant | n/a |
-| `POST` | `/api/restaurants`                  | Create a restaurant | ```json{ "name": "Subway", "description": "National build-your-own sandwich chain", "phoneNumber": "0001112222", "openingTime": "10:00:00", "closingTime": "22:00:00", "price": "$", "cuisine": "American", "location": "New York City", "diningRestriction": "Takeout Only" }``` |
-| `PATCH` | `/api/restaurants/:id`             | Update an existing Restaurant. The payload for updating a restaurant is a partial version of the 'Create a Restaurant' payload where all fields are optional. | ```json{ "description": "National build-your-own sandwich chain -- NOW WITH PIZZA", "phoneNumber": "7188212995" }``` |
-| `DELETE` | `/api/restaurants/:id`            | Delete an existing Restaurant | n/a |
-| `GET`  | `/api/reservations`                 | List all reservations | n/a |
-| `GET`  | `/api/reservations/:id`             | Retrieve a reservation by id | n/a |
-| `POST` | `/api/reservations`                 | Create a reservation. `restaurantId` must be the id of a valid Restaurant | ```json{ "firstName": "Joe", "lastName": "Smith", "phoneNumber": "9098087777", "email": "joesmith@pursuit.com", "time": "2022-06-01 19:00:00", "numGuests": "2", "restaurantId": "470d7797-8ece-4133-9885-c5651fd90625" }``` |
-| `PATCH` | `/api/reservations/:id`            | Update an existing Reservation. The payload for updating a restaurant is a partial version of the 'Create a Reservation' payload where all fields are optional and you may not change the restaurantId. | ```json{ "time": "2022-06-01 19:30:00", "numGuests": "4" }``` |
-| `DELETE` | `/api/reservations/:id`           | Delete an existing Reservation | n/a |
+<table>
+  <th><td>Method</td><td>Endpoint</td><td>Description</td><td>Example JSON Body Payload</td></th>
+  <tr><td>GET</td><td>`/api/restaurants`</td><td>List restaurants (empty query string = all restaurants)</td><td></td></tr>
+  <tr><td>GET</td><td>`/api/restaurants/:id`</td><td>Retreive a restaurant by ID</td><td></td></tr>
+  <tr><td>GET</td><td>`/api/restaurants/:id/reservations`</td><td>Retrieve all reservations at a restaurant</td><td></td></tr>
+  <tr><td>POST</td><td>`/api/restaurants`</td><td>Create a restaurant</td><td>
+
+  ```json
+    { 
+      "name": "Subway", 
+      "description": "National build-your-own sandwich chain", 
+      "phoneNumber": "0001112222", 
+      "openingTime": "10:00:00", 
+      "closingTime": "22:00:00", 
+      "price": "$", 
+      "cuisine": "American", 
+      "location": "New York City", 
+      "diningRestriction": "Takeout Only" 
+    }
+  ```
+  </td></tr>
+  <tr><td>PATCH</td><td>`/api/restaurants/:id`</td><td>Update an existing Restaurant. The payload for updating a restaurant is a partial version of the 'Create a Restaurant' payload where all fields are optional.</td><td>
+  
+  ```json
+    { 
+      "description": "National build-your-own sandwich chain -- NOW WITH PIZZA", 
+      "phoneNumber": "7188212995" 
+    }
+  ```
+  </td></tr>
+  <tr><td>DELETE</td><td>`/api/restaurants/:id`</td><td>Delete a restaurant</td><td></td></tr>
+  <tr><td>GET</td><td>`/api/reservations`</td><td>Retrieve all reservations</td><td></td></tr>
+  <tr><td>GET</td><td>`/api/reservations/:id`</td><td>Retrieve a reservation by ID</td><td></td></tr>
+  <tr><td>POST</td><td>`/api/reservations/`</td><td>Create a reservation. `restaurantId` must be the id of a valid Restaurant</td><td>
+  
+  ```json
+    { 
+      "firstName": "Joe", 
+      "lastName": "Smith", 
+      "phoneNumber": "9098087777", 
+      "email": "joesmith@pursuit.com", 
+      "time": "2022-06-01 19:00:00", 
+      "numGuests": "2", 
+      "restaurantId": "470d7797-8ece-4133-9885-c5651fd90625" 
+    }
+  ```
+  </td></tr>
+  <tr><td>PATCH</td><td>`/api/reservations/:id`</td><td>Update an existing Reservation. The payload for updating a restaurant is a partial version of the 'Create a Reservation' payload where all fields are optional and you may not change the restaurantId.</td><td>
+  
+  ```json
+    { 
+      "time": "2022-06-01 19:30:00", 
+      "numGuests": "4" 
+    }
+  ```
+  </td></tr>
+  <tr><td>DELETE</td><td>`/api/reservations/:id`</td><td>Delete a reservation</td><td></td></tr>
+</table>
+
+
 
 
 ### App Pages/Views
