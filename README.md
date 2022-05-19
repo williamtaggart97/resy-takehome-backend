@@ -6,6 +6,33 @@ Coding challenge where you build a Reservation App client that interacts with a 
 
 This Repo contains all pre-written code needed to spin up the REST API, documentation for the routes exposed by this API, and directions on what is required for the front-end or mobile app you will be creating.
 
+## Prerequisites
+
+- Heroku Account
+- Dev environment setup for either Web development (node + react) or Mobile development (Xcode and Swift)
+
+## Getting Started
+
+### Web / Mobile
+
+1. Use the step-by-step below to spin up the provided API.
+2. Create a separate Git Repo where you will write your code for the front-end for this project
+3. Use the API documentation below to integrate with the pre-provided backend
+
+#### TIP: run the 'heroku apps' command to see if your app is already running
+
+### Step-By-Step - heroku deployment
+1. In the terminal, confirm you are within the resy-takehome-backend directory
+2. Run `heroku login` and login with your heroku credentials
+3. Run `heroku container:login` 
+2. Run `bash ./scripts/start-heroku.sh -n {put your name here}-takehome-api`, ex: `bash ./scripts/start-heroku.sh -n billy-takehome-api`
+3. Wait for the command to complete
+4. Once complete, run heroku open
+
+### Stopping the app - heroku 
+1. In the terminal, confirm you are within the resy-takehome-backend directory
+2. Copy `bash ./scripts/stop-heroku.sh -n {name}-takehome-api` and paste in the terminal, then hit return / enter
+
 ## Technical Requirements
 
 Create a client for a Raffle application. Users are able to:
@@ -69,7 +96,7 @@ Your Reservation App should have the following pages or views (mobile) (and be d
 
 #### Notes
 
-- When creating 
+When you first start the API, there will be some example restaurants and reservations to help you get started. Using a service like Postman or using curl commands, you can access the API directly to update this data as you build the front-end functionality for these operations
 
 ### Design Inspiration
 
@@ -82,59 +109,4 @@ This idea for the project already pulls inspiration from apps like Open Table an
 - You must submit your solution no later than **Insert Date Here**
 - Include a README.md file with instructions on how to run your project.
 - For any questions reach out to @Billy Taggart in the [Pursuit Core Workspace](https://pursuit-core.slack.com/)
-
-
-## Prerequisites
-
-### Web
-
-- Heroku Account
-- Node.js account
-- Knowledge or JavaScript and React
-
-### Mobile
-
-- Heroku Account
-- Xcode installed
-- Knowledge of Swift
-
-## Getting Started
-
-### Web
-
-1. Create a new React App.
-   - You may use `create-react-app`
-
-### Mobile
-
-1. Create a new Swift Xcode Project for your app.
-
-### All
-
-- Spin up the API in this REPO 
-- Complete your client application according to the Technical requirements below.
-
-#### TIP: run the 'heroku apps' command to see if your app is already running
-
-### Step-By-Step - heroku deployment
-1. In the terminal, confirm you are within the resy-takehome-backend directory
-2. Run `heroku login` and login with your heroku credentials
-3. Run `heroku container:login` 
-2. Run `bash ./scripts/start-heroku.sh -n {put your name here}-takehome-api`, ex: `bash ./scripts/start-heroku.sh -n billy-takehome-api`
-3. Wait for the command to complete
-4. Once complete, run heroku open
-
-### Stopping the app - heroku 
-1. In the terminal, confirm you are within the resy-takehome-backend directory
-2. Copy `bash ./scripts/stop-heroku.sh -n {name}-takehome-api` and paste in the terminal, then hit return / enter
-
-### Step-By-Step - local deployment
-1. In the terminal, confirm you are within the resy-takehome-backend directory
-2. Copy `bash ./scripts/start-local.sh` and paste in the terminal, then hit return / enter
-3. Wait for the command to complete
-4. Once complete, access the server at `localhost:49160`
-
-### Stopping the app - local 
-1. In the terminal, confirm you are within the resy-takehome-backend directory
-2. Copy `bash ./scripts/stop-local.sh` and paste in the terminal, then hit return / enter
 
