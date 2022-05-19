@@ -6,29 +6,28 @@ import { updateReservationById } from "../../models/reservation.model";
 const validator = createValidator();
 
 interface UpdateReservationSchema extends ValidatedRequestSchema {
-    [ContainerTypes.Body]: Omit<Reservation, 'id'>,
+    [ContainerTypes.Body]: Partial<Omit<Reservation, 'id' | 'restaurantId'>>,
     [ContainerTypes.Params]: {
-        reservationId: string
+        id: string
     }
 }
 
 const expectedBody = Joi.object({
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
-    phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/),
     email: Joi.string().email({ tlds: { allow: false } }),
-    time: Joi.date().timestamp().required(),
-    numGuests: Joi.number().required(),
-    restaurantId: Joi.string().guid({ version: 'uuidv4' }).required(),
+    time: Joi.date().timestamp(),
+    numGuests: Joi.number(),
 });
 
 const expectedParams = Joi.object({
-    reservationId: Joi.string().required(),
+    id: Joi.string().required(),
 })
 
 const main: RequestHandler = async (req: ValidatedRequest<UpdateReservationSchema>, res, next) => {
     try {
-        const { reservationId } = req.params;
+        const { id: reservationId } = req.params;
 
 
         // use id to find reservation
@@ -44,4 +43,8 @@ const main: RequestHandler = async (req: ValidatedRequest<UpdateReservationSchem
     }
 }
 
-export const updateReservationController = Router({ mergeParams: true }).use(validator.params(expectedParams), main);
+export const updateReservationController = Router({ mergeParams: true }).use(
+    validator.params(expectedParams), 
+    validator.body(expectedBody), 
+    main
+);

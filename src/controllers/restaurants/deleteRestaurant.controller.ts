@@ -1,10 +1,10 @@
 import { RequestHandler, Router } from "express"
 import Joi from "joi"
 import { ContainerTypes, createValidator, ValidatedRequest, ValidatedRequestSchema } from "express-joi-validation"
-import { getRestaurantById } from "../../models/restaurant.model";
+import { deleteRestaurant } from "../../models/restaurant.model";
 const validator = createValidator();
 
-interface FindRestaurantByIdSchema extends ValidatedRequestSchema {
+interface DeleteRestaurantSchema extends ValidatedRequestSchema {
     [ContainerTypes.Params]: {
         id: string
     }
@@ -14,15 +14,18 @@ const expectedParams = Joi.object({
     id: Joi.string().guid({ version: 'uuidv4' }).required(),
 });
 
-const main: RequestHandler = async (req: ValidatedRequest<FindRestaurantByIdSchema>, res, next) => {
+const main: RequestHandler = async (req: ValidatedRequest<DeleteRestaurantSchema>, res, next) => {
     try {
         const { id: restaurantId } = req.params;
 
         // use id to find restaurant
-        const restaurant = await getRestaurantById(restaurantId);
+        const deletedId = await deleteRestaurant(restaurantId);
 
-        if (restaurant) {
-            res.status(200).send(restaurant);
+        if (deletedId) {
+            res.status(200).send({
+                success: 1,
+                removedId: deletedId
+            });
         } else {
             res.sendStatus(404);
         }
@@ -31,4 +34,4 @@ const main: RequestHandler = async (req: ValidatedRequest<FindRestaurantByIdSche
     }
 }
 
-export const getRestaurantByIdController = Router({ mergeParams: true }).use(validator.params(expectedParams), main);
+export const deleteRestaurantController = Router({ mergeParams: true }).use(validator.params(expectedParams), main);

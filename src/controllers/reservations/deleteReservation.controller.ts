@@ -6,17 +6,17 @@ const validator = createValidator();
 
 interface DeleteReservationSchema extends ValidatedRequestSchema {
     [ContainerTypes.Params]: {
-        reservationId: string
+        id: string
     }
 }
 
 const expectedParams = Joi.object({
-    reservationId: Joi.string().guid({ version: 'uuidv4' }).required(),
+    id: Joi.string().guid({ version: 'uuidv4' }).required(),
 })
 
 const main: RequestHandler = async (req: ValidatedRequest<DeleteReservationSchema>, res, next) => {
     try {
-        const { reservationId } = req.params;
+        const { id: reservationId } = req.params;
 
         // use id to delete 
         const deletedId = await deleteReservation(reservationId);

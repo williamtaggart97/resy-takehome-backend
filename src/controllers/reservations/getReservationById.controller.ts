@@ -6,17 +6,17 @@ const validator = createValidator();
 
 interface FindReservationByIdSchema extends ValidatedRequestSchema {
     [ContainerTypes.Params]: {
-        reservationId: string
+        id: string
     }
 }
 
 const expectedParams = Joi.object({
-    reservationId: Joi.string().guid({ version: 'uuidv4' }).required(),
+    id: Joi.string().guid({ version: 'uuidv4' }).required(),
 });
 
 const main: RequestHandler = async (req: ValidatedRequest<FindReservationByIdSchema>, res, next) => {
     try {
-        const { reservationId } = req.params;
+        const { id: reservationId } = req.params;
 
         // use id to find reservation
         const reservation = await getReservationById(reservationId);

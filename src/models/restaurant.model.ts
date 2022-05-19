@@ -1,6 +1,6 @@
 // Contains all direct interactions with the Restaurant Model
 import { pgKnex } from "../configs/db.config";
-import { Restaurant } from "../util/types"
+import { Restaurant, RestaurantSearchFilters } from "../util/types"
 import { redisClient } from "../configs/cache.config";
 
 export const addRestaurant = async (input: Omit<Restaurant, 'id'>): Promise<Restaurant> => {
@@ -46,14 +46,67 @@ export const getRestaurantById = async (id: string): Promise<Restaurant> => {
     }
 }
 
-export const getRestaurants = async (input: any): Promise<Restaurant[]> => {
+export const getRestaurants = async ({ filters, searchTerm }: {
+    filters?: RestaurantSearchFilters,
+    searchTerm?: string
+}): Promise<Restaurant[]> => {
     try {
         return await pgKnex<Restaurant>('Restaurants')
             .leftJoin('Reservations', 'Reservations.restaurantId', 'Restaurants.id')
             .select('Restaurants.*', pgKnex.raw('JSON_AGG("Reservations".*) as reservations'))
+            .where((builder) => {
+                // searchTerm filter
+                if (searchTerm) {
+                    builder.whereILike('name', `%${searchTerm}%`).orWhereILike('description', `%${searchTerm}%`)
+                }
+                
+                // adding filters to whereBuilder
+                if (filters) {
+                    Object.entries(filters).forEach(([key, value]) => {
+                        if (Array.isArray(value)) {
+                            builder.andWhere(key, 'in', value)
+                        } else {
+                            builder.andWhere(key, value)
+                        }
+                    })
+                }
+
+                return builder;
+            })
             .groupBy('Restaurants.id', 'Reservations.restaurantId');
     } catch (err) {
         console.error(err);
         throw new Error('Get Restaurants -- DB Query')
+    }
+}
+
+// returns id of the deleted Restaurant
+export const deleteRestaurant = async (id: string): Promise<string> => {
+    try {
+        const rowsDeleted = await pgKnex('Restaurants')
+            .where({ id })
+            .del();
+
+        if (rowsDeleted) {
+            return id;
+        } else {
+            return null;
+        }
+    } catch (err) {
+        console.error(err);
+        throw new Error(err);
+    }
+}
+
+export const updateRestaurantById = async (id: string, update: Partial<Omit<Restaurant, 'id'>>) => {
+    try {
+        return await pgKnex<Restaurant>('Restaurants')
+            .where({ id })
+            .update({
+                ...update
+            });
+    } catch (err) {
+        console.error(err);
+        throw new Error(err);
     }
 }

@@ -37,6 +37,15 @@ export const getReservations = async (input: any): Promise<Reservation[]> => {
     }
 }
 
+export const getReservationsByRestaurantId = async (restaurantId: string): Promise<Reservation[]> => {
+    try {
+        return await pgKnex<Reservation>('Reservations').select('*').where({ restaurantId });
+    } catch (err) {
+        console.error(err);
+        throw new Error(`Get Reservations by Restaurant Id (${restaurantId}) failed -- DB Query`)
+    }
+}
+
 // returns id of the deleted Reservation
 export const deleteReservation = async (id: string): Promise<string> => {
     try {
@@ -55,7 +64,7 @@ export const deleteReservation = async (id: string): Promise<string> => {
     }
 }
 
-export const updateReservationById = async (id: string, update: Partial<Reservation>) => {
+export const updateReservationById = async (id: string, update: Partial<Omit<Reservation, 'id' | 'restaurantId'>>) => {
     try {
         return await pgKnex<Reservation>('Reservations')
             .where({ id })

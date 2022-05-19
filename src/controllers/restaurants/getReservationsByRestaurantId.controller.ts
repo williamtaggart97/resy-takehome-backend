@@ -1,10 +1,10 @@
 import { RequestHandler, Router } from "express"
 import Joi from "joi"
 import { ContainerTypes, createValidator, ValidatedRequest, ValidatedRequestSchema } from "express-joi-validation"
-import { getRestaurantById } from "../../models/restaurant.model";
+import { getReservationsByRestaurantId } from "../../models/reservation.model";
 const validator = createValidator();
 
-interface FindRestaurantByIdSchema extends ValidatedRequestSchema {
+interface FindReservationsByRestaurantIdSchema extends ValidatedRequestSchema {
     [ContainerTypes.Params]: {
         id: string
     }
@@ -14,15 +14,15 @@ const expectedParams = Joi.object({
     id: Joi.string().guid({ version: 'uuidv4' }).required(),
 });
 
-const main: RequestHandler = async (req: ValidatedRequest<FindRestaurantByIdSchema>, res, next) => {
+const main: RequestHandler = async (req: ValidatedRequest<FindReservationsByRestaurantIdSchema>, res, next) => {
     try {
         const { id: restaurantId } = req.params;
 
         // use id to find restaurant
-        const restaurant = await getRestaurantById(restaurantId);
+        const reservations = await getReservationsByRestaurantId(restaurantId);
 
-        if (restaurant) {
-            res.status(200).send(restaurant);
+        if (reservations) {
+            res.status(200).send(reservations);
         } else {
             res.sendStatus(404);
         }
@@ -31,4 +31,4 @@ const main: RequestHandler = async (req: ValidatedRequest<FindRestaurantByIdSche
     }
 }
 
-export const getRestaurantByIdController = Router({ mergeParams: true }).use(validator.params(expectedParams), main);
+export const getReservationsByRestaurantIdController = Router({ mergeParams: true }).use(validator.params(expectedParams), main);
