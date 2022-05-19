@@ -52,13 +52,21 @@ Use the details and endpoints of the API below to accomplish the Reservation App
 | `GET`  | `/api/restaurants`                  | List restaurants (empty query string = all restaurants) | n/a |
 | `GET`  | `/api/restaurants/:id`              | Retrieve a restaurant by id | n/a | 
 | `GET`  | `/api/restaurants/:id/reservations` | Retrieve all reservations at a restaurant | n/a |
-| `POST` | `/api/restaurants`                  | Create a restaurant | `{ "name": "Subway", "description": "National build-your-own sandwich chain", "phoneNumber": "0001112222", "openingTime": "10:00:00", "closingTime": "22:00:00", "price": "$", "cuisine": "American", "location": "New York City", "diningRestriction": "Takeout Only" }` |
-| `PATCH` | `/api/restaurants/:id`             | Update an existing Restaurant. The payload for updating a restaurant is a partial version of the 'Create a Restaurant' payload where all fields are optional. | `{ "description": "National build-your-own sandwich chain -- NOW WITH PIZZA", "phoneNumber": "7188212995" }` |
+| `POST` | `/api/restaurants`                  | Create a restaurant | ```json
+{ "name": "Subway", "description": "National build-your-own sandwich chain", "phoneNumber": "0001112222", "openingTime": "10:00:00", "closingTime": "22:00:00", "price": "$", "cuisine": "American", "location": "New York City", "diningRestriction": "Takeout Only" }
+``` |
+| `PATCH` | `/api/restaurants/:id`             | Update an existing Restaurant. The payload for updating a restaurant is a partial version of the 'Create a Restaurant' payload where all fields are optional. | ```json
+{ "description": "National build-your-own sandwich chain -- NOW WITH PIZZA", "phoneNumber": "7188212995" }
+``` |
 | `DELETE` | `/api/restaurants/:id`            | Delete an existing Restaurant | n/a |
 | `GET`  | `/api/reservations`                 | List all reservations | n/a |
 | `GET`  | `/api/reservations/:id`             | Retrieve a reservation by id | n/a |
-| `POST` | `/api/reservations`                 | Create a reservation. `restaurantId` must be the id of a valid Restaurant | `{ "firstName": "Joe", "lastName": "Smith", "phoneNumber": "9098087777", "email": "joesmith@pursuit.com", "time": "2022-06-01 19:00:00", "numGuests": "2", "restaurantId": "470d7797-8ece-4133-9885-c5651fd90625" }` |
-| `PATCH` | `/api/reservations/:id`            | Update an existing Reservation. The payload for updating a restaurant is a partial version of the 'Create a Reservation' payload where all fields are optional and you may not change the restaurantId. | `{ "time": "2022-06-01 19:30:00", "numGuests": "4" }` |
+| `POST` | `/api/reservations`                 | Create a reservation. `restaurantId` must be the id of a valid Restaurant | ```json
+{ "firstName": "Joe", "lastName": "Smith", "phoneNumber": "9098087777", "email": "joesmith@pursuit.com", "time": "2022-06-01 19:00:00", "numGuests": "2", "restaurantId": "470d7797-8ece-4133-9885-c5651fd90625" }
+``` |
+| `PATCH` | `/api/reservations/:id`            | Update an existing Reservation. The payload for updating a restaurant is a partial version of the 'Create a Reservation' payload where all fields are optional and you may not change the restaurantId. | ```json
+{ "time": "2022-06-01 19:30:00", "numGuests": "4" }
+``` |
 | `DELETE` | `/api/reservations/:id`           | Delete an existing Reservation | n/a |
 
 
