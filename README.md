@@ -48,33 +48,33 @@ Create a client for a Raffle application. Users are able to:
 Use the details and endpoints of the API below to accomplish the Reservation App functionality. This API accepts and returns JSON payloads.
 
 <table>
-  <tr><td><strong>Method</strong></td><td><strong>Endpoint</strong></td><td><strong>Description</strong></td><td><strong>Example JSON Body Payload</strong></td></tr>
+  <tr><td><strong>Method</strong></td><td><strong>Endpoint</strong></td><td style="min-width:200px"><strong>Description</strong></td><td><strong>Example JSON Body Payload</strong></td></tr>
   <tr><td>GET</td><td>`/api/restaurants`</td><td>List restaurants (empty query string = all restaurants)</td><td></td></tr>
   <tr><td>GET</td><td>`/api/restaurants/:id`</td><td>Retreive a restaurant by ID</td><td></td></tr>
   <tr><td>GET</td><td>`/api/restaurants/:id/reservations`</td><td>Retrieve all reservations at a restaurant</td><td></td></tr>
   <tr><td>POST</td><td>`/api/restaurants`</td><td>Create a restaurant</td><td>
 
   ```json
-    { 
-      "name": "Subway", 
-      "description": "Build-your-own sandwich chain", 
-      "phoneNumber": "0001112222", 
-      "openingTime": "10:00:00", 
-      "closingTime": "22:00:00", 
-      "price": "$", 
-      "cuisine": "American", 
-      "location": "New York City", 
-      "diningRestriction": "Takeout Only" 
-    }
+{ 
+  "name": "Subway", 
+  "description": "Build-your-own sandwich chain", 
+  "phoneNumber": "0001112222", 
+  "openingTime": "10:00:00", 
+  "closingTime": "22:00:00", 
+  "price": "$", 
+  "cuisine": "American", 
+  "location": "New York City", 
+  "diningRestriction": "Takeout Only" 
+}
   ```
   </td></tr>
   <tr><td>PATCH</td><td>`/api/restaurants/:id`</td><td>Update an existing Restaurant. The payload for updating a restaurant is a partial version of the 'Create a Restaurant' payload where all fields are optional.</td><td>
   
   ```json
-    { 
-      "description": "SUBWAY -- NOW WITH PIZZA", 
-      "phoneNumber": "7188212995" 
-    }
+{ 
+  "description": "SUBWAY -- NOW WITH PIZZA", 
+  "phoneNumber": "7188212995" 
+}
   ```
   </td></tr>
   <tr><td>DELETE</td><td>`/api/restaurants/:id`</td><td>Delete a restaurant</td><td></td></tr>
@@ -83,24 +83,24 @@ Use the details and endpoints of the API below to accomplish the Reservation App
   <tr><td>POST</td><td>`/api/reservations/`</td><td>Create a reservation. `restaurantId` must be the id of a valid Restaurant</td><td>
   
   ```json
-    { 
-      "firstName": "Joe", 
-      "lastName": "Smith", 
-      "phoneNumber": "9098087777", 
-      "email": "joesmith@pursuit.com", 
-      "time": "2022-06-01 19:00:00", 
-      "numGuests": "2", 
-      "restaurantId": "470d7797-8ece-4133-9885-c5651fd90625" 
-    }
+{ 
+  "firstName": "Joe", 
+  "lastName": "Smith", 
+  "phoneNumber": "9098087777", 
+  "email": "joesmith@pursuit.com", 
+  "time": "2022-06-01 19:00:00", 
+  "numGuests": "2", 
+  "restaurantId": "470d7797-8ece-4133-9885-c5651fd90625" 
+}
   ```
   </td></tr>
   <tr><td>PATCH</td><td>`/api/reservations/:id`</td><td>Update an existing Reservation. The payload for updating a restaurant is a partial version of the 'Create a Reservation' payload where all fields are optional and you may not change the restaurantId.</td><td>
   
   ```json
-    { 
-      "time": "2022-06-01 19:30:00", 
-      "numGuests": "4" 
-    }
+{ 
+  "time": "2022-06-01 19:30:00", 
+  "numGuests": "4" 
+}
   ```
   </td></tr>
   <tr><td>DELETE</td><td>`/api/reservations/:id`</td><td>Delete a reservation</td><td></td></tr>
