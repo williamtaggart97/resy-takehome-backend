@@ -57,7 +57,7 @@ Use the details and endpoints of the API below to accomplish the Reservation App
   ```json
     { 
       "name": "Subway", 
-      "description": "National build-your-own sandwich chain", 
+      "description": "Build-your-own sandwich chain", 
       "phoneNumber": "0001112222", 
       "openingTime": "10:00:00", 
       "closingTime": "22:00:00", 
@@ -72,7 +72,7 @@ Use the details and endpoints of the API below to accomplish the Reservation App
   
   ```json
     { 
-      "description": "National build-your-own sandwich chain -- NOW WITH PIZZA", 
+      "description": "SUBWAY -- NOW WITH PIZZA", 
       "phoneNumber": "7188212995" 
     }
   ```
