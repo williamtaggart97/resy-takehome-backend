@@ -3,8 +3,8 @@ export interface Restaurant {
     name: string;
     description: string;
     phoneNumber?: string;
-    openingTime?: string; // time of day
-    closingTime?: string; // time of day
+    openingTime: string; // time of day
+    closingTime: string; // time of day
     price: '$' | '$$' | '$$$' | '$$$$';
     cuisine: string;
     location: string;

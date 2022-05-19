@@ -43,12 +43,6 @@ Create a client for a Raffle application. Users are able to:
 - List all Reservations
 - View Details for Individual Reservations or Restaurants
 
-**Notes**:
-
-- You may use any 3rd-party libraries or packages for functionality or styling.
-  - **Web** We recommend you use something like Bootstrap or Material UI or others to style you app.
-  - **Mobile** You must write your networking layer natively, do not use Alamofire or equivalents for Network Requests.
-
 ### API
 
 Use the details and endpoints of the API below to accomplish the Reservation App functionality. This API accepts and returns JSON payloads.
@@ -58,13 +52,13 @@ Use the details and endpoints of the API below to accomplish the Reservation App
 | `GET`  | `/api/restaurants`                  | List restaurants (empty query string = all restaurants) | n/a |
 | `GET`  | `/api/restaurants/:id`              | Retrieve a restaurant by id | n/a | 
 | `GET`  | `/api/restaurants/:id/reservations` | Retrieve all reservations at a restaurant | n/a |
-| `POST` | `/api/restaurants`                  | Create a restaurant | `{ "name": "My first Restaurant" }` |
-| `PATCH` | `/api/restaurants/:id`             | Update an existing Restaurant | `{}` |
+| `POST` | `/api/restaurants`                  | Create a restaurant | `{ "name": "Subway", "description": "National build-your-own sandwich chain", "phoneNumber": "0001112222", "openingTime": "10:00:00", "closingTime": "22:00:00", "price": "$", "cuisine": "American", "location": "New York City", "diningRestriction": "Takeout Only" }` |
+| `PATCH` | `/api/restaurants/:id`             | Update an existing Restaurant. The payload for updating a restaurant is a partial version of the 'Create a Restaurant' payload where all fields are optional. | `{ "description": "National build-your-own sandwich chain -- NOW WITH PIZZA", "phoneNumber": "7188212995" }` |
 | `DELETE` | `/api/restaurants/:id`            | Delete an existing Restaurant | n/a |
 | `GET`  | `/api/reservations`                 | List all reservations | n/a |
 | `GET`  | `/api/reservations/:id`             | Retrieve a reservation by id | n/a |
-| `POST` | `/api/reservations`                 | Create a reservation | `{}` |
-| `PATCH` | `/api/reservations/:id`            | Update an existing Reservation | `{}` |
+| `POST` | `/api/reservations`                 | Create a reservation. `restaurantId` must be the id of a valid Restaurant | `{ "firstName": "Joe", "lastName": "Smith", "phoneNumber": "9098087777", "email": "joesmith@pursuit.com", "time": "2022-06-01 19:00:00", "numGuests": "2", "restaurantId": "470d7797-8ece-4133-9885-c5651fd90625" }` |
+| `PATCH` | `/api/reservations/:id`            | Update an existing Reservation. The payload for updating a restaurant is a partial version of the 'Create a Reservation' payload where all fields are optional and you may not change the restaurantId. | `{ "time": "2022-06-01 19:30:00", "numGuests": "4" }` |
 | `DELETE` | `/api/reservations/:id`           | Delete an existing Reservation | n/a |
 
 
@@ -94,13 +88,29 @@ Your Reservation App should have the following pages or views (mobile) (and be d
 - User can view active reservation details
 - Additional Challenge: User can update existing reservations
 
-#### Notes
 
-When you first start the API, there will be some example restaurants and reservations to help you get started. Using a service like Postman or using curl commands, you can access the API directly to update this data as you build the front-end functionality for these operations
+**Notes**:
+
+- You may use any 3rd-party libraries or packages for functionality or styling.
+  - **Web** We recommend you use something like Bootstrap or Material UI or others to style you app.
+  - **Mobile** You must write your networking layer natively, do not use Alamofire or equivalents for Network Requests.
+
+- When you first start the API, there will be some example restaurants and reservations to help you get started. Using a service like Postman or using curl commands, you can access the API directly to update this data as you build the front-end functionality for these operations.
+
+- Restaurant Fields:
+  - Required: name, description, price, cuisine, location, openingTime, closingTime
+  - Optional: phoneNumber, diningRestriction ('Takeout Only', 'Delivery Only'), tables
+- Reservation Fields:
+  - Required: firstName, lastName, phoneNumber, time, numGuests
+  - Optional: email
+- For more detailed information about the types defined in this API see https://github.com/williamtaggart97/resy-takehome-backend/blob/main/src/util/types.ts 
+
 
 ### Design Inspiration
 
-This idea for the project already pulls inspiration from apps like Open Table and Resy, so feel free to do the same for your work. In the screenshots folders (`web-screenshots` or `mobile-screenshots`), we compiled some examples of the different pages from these sites. In addition to these screenshots, we encourage everyone to take a look at these sites
+This idea for the project already pulls inspiration from apps like Open Table and Resy, so feel free to do the same for your work. In the screenshots folders (`web-screenshots` or `mobile-screenshots`), we compiled some examples of the different pages from these sites. In addition to these screenshots, we encourage everyone to test the functionality on these sites as you make decisions about your own app.
+- https://opentable.com 
+- https://resy.com
 
 
 ## Submission Guidelines

@@ -14,8 +14,8 @@ const expectedBody = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
     phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/),
-    openingTime: Joi.date().timestamp(),
-    closingTime: Joi.date().timestamp(),
+    openingTime: Joi.date().timestamp().required(),
+    closingTime: Joi.date().timestamp().required(),
     location: Joi.string().required(),
     tables: Joi.object({
         twoPersonTables: Joi.number().required(),
