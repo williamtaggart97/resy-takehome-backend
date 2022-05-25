@@ -24,6 +24,7 @@ app.use(errorHandler);
 
 // cache setup 
 if (process.env.PORT) {
+    console.log('heroku version')
     app.listen(process.env.PORT, async () => {
         console.log(`Raffle api listening on port ${process.env.PORT}`)
 
