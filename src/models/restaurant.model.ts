@@ -104,7 +104,8 @@ export const updateRestaurantById = async (id: string, update: Partial<Omit<Rest
             .where({ id })
             .update({
                 ...update
-            });
+            })
+            .returning('*');
     } catch (err) {
         console.error(err);
         throw new Error(err);

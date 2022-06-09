@@ -18,5 +18,6 @@ export const restaurantRouter = Router().use('/restaurants', [
     getRestaurantByIdRoute,
     addRestaurantRoute,
     getReservationsByRestaurantIdRoute,
-    deleteRestaurantRoute
+    deleteRestaurantRoute,
+    updateRestaurantRoute
 ]);

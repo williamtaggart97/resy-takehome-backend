@@ -34,7 +34,6 @@ const main: RequestHandler = async (req: ValidatedRequest<UpdateRestaurantSchema
     try {
         const { id: restaurantId } = req.params;
 
-
         // use id to update restaurant
         const restaurant = await updateRestaurantById(restaurantId, req.body);
 
