@@ -35,7 +35,7 @@ This Repo contains all pre-written code needed to spin up the REST API, document
 
 ## Technical Requirements
 
-Create a client for a Raffle application. Users are able to:
+Create a client for a Restaurant Reservations application. Users are able to:
 
 - Add Restaurants
 - Search Restaurants
