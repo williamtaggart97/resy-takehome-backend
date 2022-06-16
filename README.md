@@ -26,9 +26,10 @@ This Repo contains all pre-written code needed to spin up the REST API, document
 1. In the terminal, confirm you are within the resy-takehome-backend directory
 2. Run `heroku login` and login with your heroku credentials
 3. Run `heroku container:login` 
-2. Run `bash ./scripts/start-heroku.sh -n {put your name here}-takehome-api`, ex: `bash ./scripts/start-heroku.sh -n billy-takehome-api`
-3. Wait for the command to complete
-4. Once complete, run heroku open
+4. Run `bash ./scripts/start-heroku.sh -n {put your name here}-takehome-api`, ex: `bash ./scripts/start-heroku.sh -n billy-takehome-api`
+5. Wait for the command to complete
+6. Once complete, you can access your api at https://{your name here}-example-heroku.herokuapp.com/
+7. Optional - Use my pre-built Postman collection to test the API: https://www.getpostman.com/collections/d17ea1096dbade3f4a9c
 
 ### Stopping the app - heroku 
 1. In the terminal, confirm you are within the resy-takehome-backend directory
