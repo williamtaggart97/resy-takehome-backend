@@ -8,6 +8,7 @@ This Repo contains all pre-written code needed to spin up the REST API, document
 
 ## Prerequisites
 
+- Docker installed (https://docs.docker.com/get-docker/)
 - Heroku Account
 - Dev environment setup for either Web development (node + react) or Mobile development (Xcode and Swift)
 
