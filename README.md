@@ -164,7 +164,7 @@ This idea for the project already pulls inspiration from apps like Open Table an
 ## Submission Guidelines
 
 - We think this challenge would take ~8 hours to complete, so allocate your time appropriately.
-- You must submit your solution no later than **Insert Date Here**
+- You must submit your solution no later than **6/30/22**
 - Please fill out this google form (https://forms.gle/mKYWBm6Ms5eBJS1n8) to submit your Take-Home. 
 - For any questions reach out to @Billy Taggart in the [Pursuit Core Workspace](https://pursuit-core.slack.com/)
 
