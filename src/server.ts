@@ -1,6 +1,7 @@
 'use strict';
 
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import { appRouter } from './routes';
 import { pgKnex } from './configs/db.config';
@@ -13,6 +14,7 @@ const LOCAL_HOST = '0.0.0.0';
 
 // App
 const app = express();
+app.use(cors());
 app.use(bodyParser.json())
 app.use(
     bodyParser.urlencoded({
