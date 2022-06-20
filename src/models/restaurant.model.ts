@@ -15,7 +15,7 @@ export const addRestaurant = async (input: Omit<Restaurant, 'id'>): Promise<Rest
         return newRestaurant;
     } catch (err) {
         console.error(err);
-        throw new Error('Add Restaurant Failed -- DB Query')
+        throw new Error(`Add Restaurant Failed -- ${err.message}`)
     }
 }
 
@@ -42,7 +42,7 @@ export const getRestaurantById = async (id: string): Promise<Restaurant> => {
 
     } catch (err) {
         console.error(err);
-        throw new Error('Get Restaurant By ID -- DB Query')
+        throw new Error(`Get Restaurant By ID -- ${err.message}`)
     }
 }
 
@@ -76,7 +76,7 @@ export const getRestaurants = async ({ filters, searchTerm }: {
             .groupBy('Restaurants.id', 'Reservations.restaurantId');
     } catch (err) {
         console.error(err);
-        throw new Error('Get Restaurants -- DB Query')
+        throw new Error(`Get Restaurants -- ${err.message}`)
     }
 }
 
@@ -94,7 +94,7 @@ export const deleteRestaurant = async (id: string): Promise<string> => {
         }
     } catch (err) {
         console.error(err);
-        throw new Error(err);
+        throw new Error(`Delete Restaurant failed -- ${err.message}`);
     }
 }
 
@@ -108,6 +108,6 @@ export const updateRestaurantById = async (id: string, update: Partial<Omit<Rest
             .returning('*');
     } catch (err) {
         console.error(err);
-        throw new Error(err);
+        throw new Error(`Update Restaurant Failed -- ${err.message}`);
     }
 }
