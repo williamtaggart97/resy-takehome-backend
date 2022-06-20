@@ -21,9 +21,13 @@ app.use(
         extended: true,
     })
 )
-app.get('/', (req, res) => { 
-    const buffer = fs.readFileSync('./README.html');
-    res.status(200).send(buffer.toString());
+app.get('/', (req, res, next) => { 
+    try {
+        const buffer = fs.readFileSync('./README.html');
+        res.status(200).send(buffer.toString());
+    } catch (err) {
+        next(err)
+    }
 })
 app.use('/api', appRouter);
 app.use(errorHandler);
