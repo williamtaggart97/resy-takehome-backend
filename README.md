@@ -161,6 +161,8 @@ This idea for the project already pulls inspiration from apps like Open Table an
 - https://opentable.com 
 - https://resy.com
 
+## Hints
+When formatting your query string to search and filter restaurants, the 'qs' npm library can be very helpful for formatting complex query strings.
 
 ## Submission Guidelines
 
