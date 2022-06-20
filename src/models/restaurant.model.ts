@@ -1,7 +1,6 @@
 // Contains all direct interactions with the Restaurant Model
 import { pgKnex } from "../configs/db.config";
 import { Restaurant, RestaurantSearchFilters } from "../util/types"
-import { redisClient } from "../configs/cache.config";
 
 export const addRestaurant = async (input: Omit<Restaurant, 'id'>): Promise<Restaurant> => {
     try {

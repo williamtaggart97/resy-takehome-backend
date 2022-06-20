@@ -11,7 +11,7 @@ if [ -z "$name" ]
     else
         heroku create $name
         heroku addons:create heroku-postgresql:hobby-dev
-        heroku addons:create heroku-redis:hobby-dev
+        # heroku addons:create heroku-redis:hobby-dev
         docker buildx build --platform linux/amd64 -t $name -f Dockerfile.prod .
         docker tag $name registry.heroku.com/$name/web
         docker push registry.heroku.com/$name/web  

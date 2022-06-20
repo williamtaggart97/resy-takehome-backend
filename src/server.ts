@@ -5,7 +5,6 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { appRouter } from './routes';
 import { pgKnex } from './configs/db.config';
-import { redisClient } from './configs/cache.config';
 import { errorHandler } from './util/errors';
 
 // Constants
@@ -38,14 +37,14 @@ if (process.env.PORT) {
                 console.error(e);
             });
 
-        // cache setup -- only for local development
-        await redisClient.connect().then(() => {
-            console.log('Redis Client Connected')
-        })
-            .catch((e) => {
-                console.log('Redis Client not connected');
-                console.error(e);
-            });
+        // cache setup - removed because unused (for now)
+        // await redisClient.connect().then(() => {
+        //     console.log('Redis Client Connected')
+        // })
+        //     .catch((e) => {
+        //         console.log('Redis Client not connected');
+        //         console.error(e);
+        //     });
     });
 } else {
     app.listen(LOCAL_PORT, LOCAL_HOST, async () => {
@@ -59,14 +58,14 @@ if (process.env.PORT) {
                 console.error(e);
             });
 
-        // cache setup -- only for local development
-        await redisClient.connect().then(() => {
-            console.log('Redis Client Connected')
-        })
-            .catch((e) => {
-                console.log('Redis Client not connected');
-                console.error(e);
-            });
+        // cache setup -- removed because unused (for now)
+        // await redisClient.connect().then(() => {
+        //     console.log('Redis Client Connected')
+        // })
+        //     .catch((e) => {
+        //         console.log('Redis Client not connected');
+        //         console.error(e);
+        //     });
     });
 }
 
