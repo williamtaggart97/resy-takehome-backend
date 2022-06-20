@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import { appRouter } from './routes';
 import { pgKnex } from './configs/db.config';
 import { errorHandler } from './util/errors';
+import * as fs from 'fs';
 
 // Constants
 const LOCAL_PORT = 8080;
@@ -20,6 +21,10 @@ app.use(
         extended: true,
     })
 )
+app.get('/', (req, res) => { 
+    const buffer = fs.readFileSync('./README.html');
+    res.status(200).send(buffer.toString());
+})
 app.use('/api', appRouter);
 app.use(errorHandler);
 
