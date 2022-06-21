@@ -140,7 +140,8 @@ Your Reservation App should have the following pages or views (mobile) (and be d
 
 #### Single Reservation (`/reservations/:id`)
 - User can view active reservation details
-- Additional Challenge: User can update existing reservations
+- User can update existing reservations
+- User can cancel a reservation
 
 
 **Notes**:
@@ -157,7 +158,7 @@ Your Reservation App should have the following pages or views (mobile) (and be d
 - Reservation Fields:
   - Required: firstName, lastName, phoneNumber, time, numGuests
   - Optional: email
-- For more detailed information about the types defined in this API see https://github.com/williamtaggart97/resy-takehome-backend/blob/main/src/util/types.ts 
+- For more detailed information about the types defined in this API see [`./src/util/types.ts`](https://github.com/williamtaggart97/resy-takehome-backend/blob/main/src/util/types.ts )
 
 
 ### Design Inspiration
@@ -167,7 +168,8 @@ This idea for the project already pulls inspiration from apps like Open Table an
 - https://resy.com
 
 ## Hints
-When formatting your query string to search and filter restaurants, the 'qs' npm library can be very helpful for formatting complex query strings.
+- When formatting your query string to search and filter restaurants, the 'qs' npm library can be very helpful for formatting complex query strings.
+- Think about what should happen if two reservations are at the same time. (look at the TableConfig type in [`./src/util/types.ts`](https://github.com/williamtaggart97/resy-takehome-backend/blob/main/src/util/types.ts ))
 
 ## Submission Guidelines
 
