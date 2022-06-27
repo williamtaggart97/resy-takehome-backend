@@ -70,7 +70,8 @@ export const updateReservationById = async (id: string, update: Partial<Omit<Res
             .where({ id })
             .update({
                 ...update
-            });
+            })
+            .returning('*');
     } catch (err) {
         console.error(err);
         throw new Error(`Update Reservation Failed -- ${err.message}`);
