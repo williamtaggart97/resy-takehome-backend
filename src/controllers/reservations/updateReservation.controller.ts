@@ -22,7 +22,7 @@ const expectedBody = Joi.object({
 });
 
 const expectedParams = Joi.object({
-    id: Joi.string().required(),
+    id: Joi.string().guid({ version: 'uuidv4' }).required(),
 })
 
 const main: RequestHandler = async (req: ValidatedRequest<UpdateReservationSchema>, res, next) => {

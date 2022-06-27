@@ -24,7 +24,7 @@ const main: RequestHandler = async (req: ValidatedRequest<MakeReservationSchema>
         const newReservation = await makeReservation(req.body);
 
         if (newReservation) {
-            res.status(200).send(newReservation);
+            res.status(201).send(newReservation);
         }
     } catch (err) {
         next(err)
