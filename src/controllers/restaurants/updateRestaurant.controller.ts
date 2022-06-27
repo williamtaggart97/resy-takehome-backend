@@ -15,11 +15,11 @@ interface UpdateRestaurantSchema extends ValidatedRequestSchema {
 const expectedBody = Joi.object({
     name: Joi.string(),
     description: Joi.string(),
-    phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/),
+    phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/).allow(null, ''),
     openingTime: Joi.string().regex(/^([01]\d|2[0-3]):?([0-5]\d):?([0-5]\d)$/),
     closingTime: Joi.string().regex(/^([01]\d|2[0-3]):?([0-5]\d):?([0-5]\d)$/),
     location: Joi.string(),
-    diningRestriction: Joi.string().valid('Delivery Only', 'Takeout Only'),
+    diningRestriction: Joi.string().valid('Delivery Only', 'Takeout Only').allow(null, ''),
     price: Joi.string().valid('$', '$$', '$$$', '$$$$'),
     cuisine: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string()),
     tables: Joi.object({
