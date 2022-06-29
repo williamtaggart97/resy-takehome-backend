@@ -26,11 +26,7 @@ export const getRestaurantById = async (id: string): Promise<Restaurant> => {
             .where({ 'Restaurants.id': id })
             .groupBy('Restaurants.id', 'Reservations.restaurantId');
 
-        if (restaurant) {
-            return restaurant;
-        } else {
-            return null;
-        }
+        return restaurant || null;
     } catch (err) {
         console.error(err);
         throw new Error(`Get Restaurant By ID -- ${err.message}`)
