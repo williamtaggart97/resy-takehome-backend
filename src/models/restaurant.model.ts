@@ -20,11 +20,6 @@ export const addRestaurant = async (input: Omit<Restaurant, 'id'>): Promise<Rest
 
 export const getRestaurantById = async (id: string): Promise<Restaurant> => {
     try {
-        // Cache Aside Implementation
-        // STEP 1: Check if Restaurant exists in the cache
-        // write function here
-
-        // STEP 2: If Restaurant is not in the cache, check the db for the record
         const restaurant: Restaurant = await pgKnex<Restaurant>('Restaurants')
             .leftJoin('Reservations', 'Reservations.restaurantId', 'Restaurants.id')
             .first('Restaurants.*', pgKnex.raw('JSON_AGG("Reservations".*) as reservations'))
@@ -32,13 +27,10 @@ export const getRestaurantById = async (id: string): Promise<Restaurant> => {
             .groupBy('Restaurants.id', 'Reservations.restaurantId');
 
         if (restaurant) {
-            // STEP 3: If Restaurant is not in the cache, add record to the cache
-
             return restaurant;
         } else {
             return null;
         }
-
     } catch (err) {
         console.error(err);
         throw new Error(`Get Restaurant By ID -- ${err.message}`)
