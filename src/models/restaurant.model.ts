@@ -9,7 +9,8 @@ export const addRestaurant = async (input: Omit<Restaurant, 'id'>): Promise<Rest
         // Note: We don't expect restaurant meta data to change very often but people may be reading this data often
         // Question: What type of eviction policy do we think would be best in this situation
 
-        const [newRestaurant] = await pgKnex<Restaurant>('Restaurants').insert(input).returning('*');
+        
+        const [newRestaurant] = await pgKnex<Restaurant>('Restaurants').insert({ ...input, diningRestriction: (input.diningRestriction as any) === '' ? null : input.diningRestriction }).returning('*');
 
         return newRestaurant;
     } catch (err) {
@@ -90,7 +91,8 @@ export const updateRestaurantById = async (id: string, update: Partial<Omit<Rest
         return await pgKnex<Restaurant>('Restaurants')
             .where({ id })
             .update({
-                ...update
+                ...update,
+                diningRestriction: (update.diningRestriction as any) === '' ? null : update.diningRestriction
             })
             .returning('*');
     } catch (err) {
