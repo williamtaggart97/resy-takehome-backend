@@ -18,7 +18,7 @@ const main: RequestHandler = async (req: ValidatedRequest<DeleteRestaurantSchema
     try {
         const { id: restaurantId } = req.params;
 
-        // use id to find restaurant
+        // use id to find restaurant and delete it
         const deletedId = await deleteRestaurant(restaurantId);
 
         if (deletedId) {
