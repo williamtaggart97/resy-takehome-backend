@@ -12,6 +12,7 @@ import * as fs from 'fs';
 const LOCAL_PORT = 8080;
 const LOCAL_HOST = '0.0.0.0';
 
+console.log('cherrypick')
 // App
 const app = express();
 app.use(cors());
