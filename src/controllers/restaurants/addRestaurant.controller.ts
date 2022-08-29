@@ -13,7 +13,7 @@ export interface AddRestaurantSchema extends ValidatedRequestSchema {
 const expectedBody = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
-    phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/).allow(null, ''),
+    phoneNumber: Joi.string().pattern(/^\+[1-9]{1}[0-9]{3,14}$/).allow(null, ''),
     openingTime: Joi.string().regex(/^([01]\d|2[0-3]):?([0-5]\d):?([0-5]\d)$/).required(),
     closingTime: Joi.string().regex(/^([01]\d|2[0-3]):?([0-5]\d):?([0-5]\d)$/).required(),
     location: Joi.string().required(),
