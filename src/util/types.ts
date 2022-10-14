@@ -5,7 +5,7 @@ export interface Restaurant {
     phoneNumber?: string;
     openingTime: string; // time of day
     closingTime: string; // time of day
-    price: '$' | '$$' | '$$$' | '$$$$';
+    price?: '$' | '$$' | '$$$' | '$$$$';
     cuisine: string;
     location: string;
     diningRestriction?: 'Takeout Only' | 'Delivery Only';
