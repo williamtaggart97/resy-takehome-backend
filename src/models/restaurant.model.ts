@@ -4,12 +4,6 @@ import { Restaurant, RestaurantSearchFilters } from "../util/types"
 
 export const addRestaurant = async (input: Omit<Restaurant, 'id'>): Promise<Restaurant> => {
     try {
-        // Write Ahead Caching
-        // TASK 1: Implement writing to the cache any new restaurants that get added to the backend
-        // Note: We don't expect restaurant meta data to change very often but people may be reading this data often
-        // Question: What type of eviction policy do we think would be best in this situation
-
-        
         const [newRestaurant] = await pgKnex<Restaurant>('Restaurants').insert({ ...input, diningRestriction: (input.diningRestriction as any) === '' ? null : input.diningRestriction }).returning('*');
 
         return newRestaurant;
