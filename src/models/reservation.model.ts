@@ -1,27 +1,24 @@
 // Contains all direct interactions with the Reservation Model
 
-import { pgKnex } from "../configs/db.config";
-import { Reservation } from "../util/types";
+import { ObjectId } from "mongodb";
+import { MakeReservationBody } from "../controllers/reservations/makeReservation.controller";
+import { getResyDb } from "../configs/mongo.config";
+import { Reservation, Restaurant } from "../util/types";
 
 // returns the newly created Reservation
-export const makeReservation = async (input: Omit<Reservation, 'id'>): Promise<Reservation> => {
+export const makeReservation = async (input: MakeReservationBody): Promise<boolean> => {
     try {
-        const [newReservation] = await pgKnex<Reservation>('Reservations').insert(input, '*');
+        const { value, ok } = await getResyDb().collection<Restaurant>('restaurants')
+            .findOneAndUpdate({
+                _id: ObjectId.createFromHexString(input.restaurantId)
+            }, {
+                $push: { reservations: input }
+            })
 
-        return newReservation;
+        return !!ok;
     } catch (err) {
         console.error(err);
         throw new Error(`Make Reservation failed -- ${err.message}`);
-    }
-}
-
-// returns Reservation associated with id
-export const getReservationById = async (id: string): Promise<Reservation> => {
-    try {
-        return await pgKnex<Reservation>('Reservations').first('*').where({ id });
-    } catch (err) {
-        console.error(err);
-        throw new Error(`Get Reservation By Id failed -- ${err.message}`)
     }
 }
 
@@ -29,8 +26,10 @@ export const getReservationById = async (id: string): Promise<Reservation> => {
 export const getReservations = async (input: any): Promise<Reservation[]> => {
     try {
         // currently get All Reservations
-        // TODO: add filters
-        return await pgKnex<Reservation>('Reservations').select('*');
+        // return await pgKnex<Reservation>('Reservations').select('*');
+        const restaurants = await getResyDb().collection<Restaurant>('restaurant').find({}).toArray();
+
+        return restaurants.map(d => d.reservations).flat();
     } catch (err) {
         console.error(err);
         throw new Error(`Get Reservations failed -- ${err.message}`);
@@ -39,7 +38,9 @@ export const getReservations = async (input: any): Promise<Reservation[]> => {
 
 export const getReservationsByRestaurantId = async (restaurantId: string): Promise<Reservation[]> => {
     try {
-        return await pgKnex<Reservation>('Reservations').select('*').where({ restaurantId });
+        const restaurant = await getResyDb().collection<Restaurant>('restaurants').findOne({ _id: ObjectId.createFromHexString(restaurantId) });
+
+        return restaurant.reservations;
     } catch (err) {
         console.error(err);
         throw new Error(`Get Reservations by Restaurant Id (${restaurantId}) failed -- ${err.message}`)
@@ -47,31 +48,44 @@ export const getReservationsByRestaurantId = async (restaurantId: string): Promi
 }
 
 // returns id of the deleted Reservation
-export const deleteReservation = async (id: string): Promise<string> => {
+export const deleteReservation = async (firstName: string, lastName: string, restaurantId: string): Promise<boolean> => {
     try {
-        const rowsDeleted = await pgKnex('Reservations')
-            .where({ id })
-            .del();
+        const { value, ok } = await getResyDb().collection<Restaurant>('restaurants')
+            .findOneAndUpdate({
+                _id: ObjectId.createFromHexString(restaurantId)
+            }, {
+                $pull: { reservations: { firstName, lastName } }
+            });
 
-        if (rowsDeleted) {
-            return id;
-        } else {
-            return null;
-        }
+        return !!ok;
     } catch (err) {
         console.error(err);
         throw new Error(`Delete Reservation failed -- ${err.message}`);
     }
 }
 
-export const updateReservationById = async (id: string, update: Partial<Omit<Reservation, 'id' | 'restaurantId'>>) => {
+export const updateReservation = async (firstName: string, lastName: string, restaurantId: string, update: Partial<Omit<Reservation, 'id' | 'restaurantId'>>) => {
     try {
-        return await pgKnex<Reservation>('Reservations')
-            .where({ id })
-            .update({
-                ...update
-            })
-            .returning('*');
+        // generate set obj
+        const setObj = Object.entries(update).reduce((prev, [k, v]) => {
+            return {
+                ...prev,
+                [`reservations.${k}`]: v
+            }
+        }, {});
+
+        console.log(setObj);
+        
+        const { value, ok } = await getResyDb().collection<Restaurant>('restaurants')
+            .findOneAndUpdate({
+                _id: ObjectId.createFromHexString(restaurantId),
+                "reservations.firstName": firstName,
+                "reservations.lastName": lastName,
+            }, {
+                $set: setObj
+            });
+
+        return !!ok;
     } catch (err) {
         console.error(err);
         throw new Error(`Update Reservation Failed -- ${err.message}`);

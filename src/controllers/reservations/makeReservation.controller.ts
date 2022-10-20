@@ -5,8 +5,12 @@ import { makeReservation } from "../../models/reservation.model";
 import { Reservation } from "../../util/types";
 const validator = createValidator();
 
+export interface MakeReservationBody extends Omit<Reservation, 'id'> { 
+    restaurantId: string;
+} 
+
 interface MakeReservationSchema extends ValidatedRequestSchema {
-    [ContainerTypes.Body]: Omit<Reservation, 'id'>
+    [ContainerTypes.Body]: MakeReservationBody
 }
 
 const expectedBody = Joi.object({
@@ -21,7 +25,7 @@ const expectedBody = Joi.object({
 
 const main: RequestHandler = async (req: ValidatedRequest<MakeReservationSchema>, res, next) => {
     try {
-        const newReservation = await makeReservation(req.body);
+        const newReservation = await makeReservation(req.body );
 
         if (newReservation) {
             res.status(201).send(newReservation);

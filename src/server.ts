@@ -7,6 +7,7 @@ import { appRouter } from './routes';
 import { pgKnex } from './configs/db.config';
 import { errorHandler } from './util/errors';
 import * as fs from 'fs';
+import { mongoClient } from './configs/mongo.config';
 
 // Constants
 const LOCAL_PORT = 8080;
@@ -59,22 +60,17 @@ if (process.env.PORT) {
     app.listen(LOCAL_PORT, LOCAL_HOST, async () => {
         console.log(`Raffle api listening on port ${LOCAL_PORT}`)
 
-        pgKnex.raw("SELECT 1").then(() => {
-            console.log("PostgreSQL connected");
-        })
-            .catch((e) => {
-                console.log("PostgreSQL not connected");
-                console.error(e);
-            });
-
-        // cache setup -- removed because unused (for now)
-        // await redisClient.connect().then(() => {
-        //     console.log('Redis Client Connected')
-        // })
-        //     .catch((e) => {
-        //         console.log('Redis Client not connected');
-        //         console.error(e);
-        //     });
+        try {
+            const database = mongoClient.db('sample_mflix');
+            const movies = database.collection('movies');
+            // Query for a movie that has the title 'Back to the Future'
+            const query = { title: 'Back to the Future' };
+            const movie = await movies.findOne(query);
+            console.log(movie);
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await mongoClient.close();
+        }       
     });
 }
 

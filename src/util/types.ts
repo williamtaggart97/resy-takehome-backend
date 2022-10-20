@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export interface Restaurant {
-    id: string;
+    _id: ObjectId;
     name: string;
     description: string;
     phoneNumber?: string;
@@ -27,7 +29,7 @@ export interface TableConfig {
 }
 
 export interface Reservation {
-    id: string;
+    // _id: string;
     createdAt: string; // timestamp
     firstName: string;
     lastName: string;
@@ -35,5 +37,4 @@ export interface Reservation {
     email?: string; // email of the primary guest
     time: string; // time of day
     numGuests: number;
-    restaurantId: string;
 }

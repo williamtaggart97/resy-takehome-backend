@@ -2,39 +2,33 @@ import { RequestHandler, Router } from "express"
 import Joi from "joi"
 import { ContainerTypes, createValidator, ValidatedRequest, ValidatedRequestSchema } from "express-joi-validation";
 import { Reservation } from "../../util/types";
-import { updateReservationById } from "../../models/reservation.model";
+import { updateReservation } from "../../models/reservation.model";
+
 const validator = createValidator();
 
 interface UpdateReservationSchema extends ValidatedRequestSchema {
-    [ContainerTypes.Body]: Partial<Omit<Reservation, 'id' | 'restaurantId'>>,
-    [ContainerTypes.Params]: {
-        id: string
-    }
+    [ContainerTypes.Body]: any,
 }
 
 const expectedBody = Joi.object({
-    firstName: Joi.string(),
-    lastName: Joi.string(),
+    restaurantId: Joi.string().guid({ version: 'uuidv4' }).required(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
     phoneNumber: Joi.string().length(10).pattern(/^[0-9]+$/),
     email: Joi.string().email({ tlds: { allow: false } }),
     time: Joi.date(),
     numGuests: Joi.number(),
 });
 
-const expectedParams = Joi.object({
-    id: Joi.string().guid({ version: 'uuidv4' }).required(),
-})
-
 const main: RequestHandler = async (req: ValidatedRequest<UpdateReservationSchema>, res, next) => {
     try {
-        const { id: reservationId } = req.params;
-
+        const { restaurantId, firstName, lastName, ...update } = req.body;
 
         // use id to find reservation
-        const reservation = await updateReservationById(reservationId, req.body);
+        const success = await updateReservation(firstName, lastName, restaurantId, update);
 
-        if (reservation) {
-            res.status(200).send(reservation);
+        if (success) {
+            res.status(200).send(1);
         } else {
             res.sendStatus(404);
         }
@@ -44,7 +38,7 @@ const main: RequestHandler = async (req: ValidatedRequest<UpdateReservationSchem
 }
 
 export const updateReservationController = Router({ mergeParams: true }).use(
-    validator.params(expectedParams), 
-    validator.body(expectedBody), 
+    // validator.params(expectedParams),
+    validator.body(expectedBody),
     main
 );
