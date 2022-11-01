@@ -180,7 +180,11 @@ export const populate = async () => {
         const database = await mongoClient.db(DB_NAME);
         const collection = await database.collection<Restaurant>('restaurants');
         await collection.insertMany(sampleRestaurants as Restaurant[])
+
+
         collection.createIndex({ name: 'text', description: 'text' })
+
+        
         console.log(await collection.findOne({ name: 'La Sucre' }));
     } catch (err) {
         console.error(err);
